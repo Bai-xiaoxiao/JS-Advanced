@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			var arr = [1, 2, 3, 4, 5];
+			//用sort
+			function useSort(arg) {
+				arg.sort(function() {
+					return Math.random() - 0.5;
+				})
+				return arg;
+			}
+			//sort有很大几率上乱序不彻底，很大几率会出现返回的数组顺序不变
+			//console.log(useSort(arr))
+
+			//Fisher–Yates
+			function mySort(a) {
+				var j, x, i;
+				for(i = a.length; i; i--) {
+					console.log(i);
+					//随机数*i，向下取整
+					j = Math.floor(Math.random() * i);
+					x = a[i - 1];
+					//当前下标i和随机数下标互换位置
+					a[i - 1] = a[j];
+					a[j] = x;
+					//上面互换的方法用ES6
+					//[a[i - 1], a[j]] = [a[j], a[i - 1]];
+				}
+				return a;
+			}
+			mySort(arr);
+		</script>
+	</body>
+
+</html>

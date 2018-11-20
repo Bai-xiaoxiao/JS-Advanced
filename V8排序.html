@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div>
+			<h3>插入排序</h3>
+			<img src="https://github.com/mqyqingfeng/Blog/raw/master/Images/sort/insertion.gif" alt="" />
+		</div>
+
+		<script>
+			//排序采用的算法跟数组的长度有关，当数组长度小于等于 10 时，采用插入排序，大于 10 的时候，采用快速排序。(当然了，这种说法并不严谨)。
+			
+			//插入排序
+			function insertionSort(arr) {
+				debugger
+				for(var i = 1; i < arr.length; i++) {
+					var element = arr[i];
+					//向前比较，把小的那个向前挪
+					for(var j = i - 1; j >= 0; j--) {
+						var tmp = arr[j];
+						var order = tmp - element;
+						if(order > 0) {
+							arr[j + 1] = tmp;
+						} else {
+							break;
+						}
+					}
+					//里面的循环了第一次后数组变成[6,6,4,3,2,1]
+					//然后把之前存的5赋值到下标0，变成[5,6,4,3,2,1]
+					arr[0] = element;
+				}
+				return arr;
+			}
+
+			var arr = [6, 5, 4, 3, 2, 1];
+			console.log(insertionSort(arr));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//深拷贝含义
+			//在浅拷贝基础上，遇到引用类型的值需要再次执行浅拷贝
+			function deep(target, source) {
+				for (var i in source) {
+					//含有引用类型
+					if(typeof source[i] === 'object'){
+						//此时包含了对象和数组
+						if(source[i].constructor == Array){
+							target[i] = [];
+						}else{
+							target[i] = {};
+						}
+						//需要递归执行deep拷贝
+						deep(target[i], source[i]);
+					}else{
+						target[i] = source[i];
+					}
+				}
+			}
+			//浅拷贝
+			function shallow(target, source){
+				for (let i in source) {
+					console.log(i, source[i])
+					target[i] = source[i];
+				}
+				return target;
+			}
+			function extend(isDeep, target, source) {
+				
+			}
+			var obj1 = {
+				name: 'obj1',
+				arr: [1,2,3]
+			},
+			obj2 = {};
+			//浅拷贝一次
+			shallow(obj2, obj1);
+			//obj2.arr.push(4)
+			//引用类型指向同一份内存地址
+			//console.log(obj2, obj1)
+			
+			var obj3 = {};
+			deep(obj3, obj1);
+			obj3.arr.push(4);
+			console.log(obj3, obj1);
+			
+			//true
+			console.log(typeof [1,2] === 'object')
+			//true
+			console.log(Array.isArray([1,2]))
+			//true
+			console.log([1,2].constructor === Array)
+			//true
+			console.log({}.constructor === Object)
+			
+			var jsonObj = {
+				name: 'jsonObj',
+				arr: [1,2,3]
+			}
+			//先把对象序列化成一个字符串，再转成JSON对象，就新建了一份内存
+			//IE7不兼容
+			var copyObj = JSON.parse(JSON.stringify(jsonObj));
+			copyObj.arr.push(4);
+			console.log(copyObj, jsonObj);
+		</script>
+	</body>
+</html>

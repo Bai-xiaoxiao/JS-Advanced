@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//Object.prototype.toString
+
+			// 以下是11种：
+			var number = 1; // [object Number]
+			var string = '123'; // [object String]
+			var boolean = true; // [object Boolean]
+			var und = undefined; // [object Undefined]
+			var nul = null; // [object Null]
+			var obj = {
+				a: 1
+			} // [object Object]
+			var array = [1, 2, 3]; // [object Array]
+			var date = new Date(); // [object Date]
+			var error = new Error(); // [object Error]
+			var reg = /a/g; // [object RegExp]
+			var func = function a() {}; // [object Function]
+			console.log(Object.prototype.toString.call(Math)); // [object Math]
+			console.log(Object.prototype.toString.call(JSON)); // [object JSON]
+			//查看参数的类型
+			//console.log(Object.prototype.toString.call(arguments)); // [object Arguments]
+			
+			//封装
+			function checkType() {
+				var objCheck = Object.prototype.toString,
+				len = arguments.length;
+				
+				if(len === 0) return null;
+				
+				//单独参数
+				if(len === 1){
+					return objCheck.call(arguments[i]);
+				}else{
+					var arr = [],
+					i = 0;
+					for(; i < len; i++) {
+						arr.push(objCheck.call(arguments[i]));
+					}
+					return arr;
+				}
+				
+			}
+			
+			console.log(checkType(obj, und, '123123'))
+		</script>
+	</body>
+
+</html>

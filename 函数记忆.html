@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			function memoize(f) {
+				var cache = {};
+				return function() {
+					var key = arguments.length + Array.prototype.join.call(arguments, ",");//31,2,3
+					if(key in cache) {
+						return cache[key]
+					} else {
+						return cache[key] = f.apply(this, arguments)
+					}
+				}
+			}
+			
+			var add = function(a, b, c) {
+				return a + b + c
+			}
+			var memoizedAdd = memoize(add)
+			
+			//耗时比普通函数长，不过要是有需要大量计算以来前一个结果的时候，或者需要利用到缓存的时候
+			//便利做阶计算的时候，需要利用上一个函数的结果，这时候函数记忆就很有用
+			console.time('use memoize')
+			for(var i = 0; i < 100000; i++) {
+				memoizedAdd(1, 2, 3)
+			}
+			console.timeEnd('use memoize')//63.045166015625ms
+			
+			console.time('not use memoize')
+			for(var i = 0; i < 100000; i++) {
+				add(1, 2, 3)
+			}
+			console.timeEnd('not use memoize')//2.68603515625ms
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body > div{
+				background: red;
+				width: 100px;
+				height: 100px;
+			}
+			
+			/*浮动之后这些属性可能会失效，只能在浮动元素内部再加小盒子才行*/
+			.boxOne{
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+			}
+			.boxOne span{
+				display: inline-block;
+				width: 100%;
+			}
+			
+			.boxTwo{
+				margin-left: 50px;
+				position: relative;
+			}
+			.boxTwo div{
+				position: absolute;
+				margin: auto;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				width: 50px;
+				height: 50px;
+				background: white;
+			}
+			
+			.boxThree{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+			.boxThree span{
+				display: inline-block;
+				width: 100%;
+			}
+			
+			.boxFour{
+				margin-left: 50px;
+				position: relative;
+			}
+			.boxFour div{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate( -50%, -50% );
+			}
+		</style>
+	</head>
+	<body>
+		<!--table-cell-->
+		<!--设置父盒子来规定里面的盒子，须设置宽高，可以用js动态获取宽高来设置-->
+		<div class="boxOne">
+			<div>
+				<div>123</div>
+				<div>123</div>
+			</div>
+		</div>
+		
+		
+		<div class="boxTwo">
+			<!--设置里面的盒子，里面的div需要设置宽高，不然就会和父盒子一样高-->
+			<div>
+				<span>123</span>
+				<span>123</span>
+			</div>
+		</div>
+		
+		<!--flex布局-->
+		<div class="boxThree">
+			<div>
+				<span>123</span>
+				<span>123</span>
+			</div>
+		</div>
+		
+		<!--一使用定位加translate偏移-->
+		<div class="boxFour">
+			<div>
+				<span>123</span>
+				<span>123</span>
+			</div>
+		</div>
+	</body>
+</html>

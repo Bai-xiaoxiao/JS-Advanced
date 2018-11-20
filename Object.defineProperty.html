@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//Object.defineProperty
+			var Book = {}
+			var name = '';
+			
+			//劫持Book的name属性，
+			//get就是在读取name属性这个值触发的函数
+			//set就是在设置name属性这个值触发的函数
+			Object.defineProperty(Book, 'name', {
+				set: function(value) {
+					//value对应是Book.name的值
+					name = value;
+					console.log('你取了一个书名叫做' + value);
+				},
+				get: function() {
+					console.log('我是get');
+					
+					//注意，这里在读取时，如果不返回值，那么去到的name是undefind
+					//也可以在返回之前做一些操作,如果操作是改变name的值的话，那么还会执行set
+					this.name = 111;
+					//然后执行set，然后才返回name
+					return name;
+				}
+			});
+			
+			Book.name = 'vue权威指南'; // 你取了一个书名叫做vue权威指南
+			console.log(Book.name);
+			
+		</script>
+	</body>
+
+</html>

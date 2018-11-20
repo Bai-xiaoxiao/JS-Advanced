@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			var arr = [1, 3, 2, 4, 6, 5];
+
+			function bubbleSort(arr) {
+				var len = arr.length;
+				for(var i = 0; i < len; i++) {
+					//为什么要用len - 1 - i呢？ 
+					//ex： 对比到4时，还剩两个没对比(之前对比的都是大的数拍后面，所以不用管前面的数);
+					//只需要对比下标为3(前一个),只剩最后两个需要对比,所以用len - 1 - i
+					for(var j = 0; j < len - 1 - i; j++) {
+						if(arr[j] > arr[j + 1]) { //相邻元素两两对比
+							var temp = arr[j + 1]; //元素交换
+							arr[j + 1] = arr[j]; //大的放后面
+							arr[j] = temp; //小的放前面
+						}
+					}
+				}
+				return arr;
+			}
+			//console.log(bubbleSort(arr));
+			
+			function mySort(arr){
+				let len = arr.length,
+				i = 0,
+				j = 0;
+				for (; i < len; i++) {
+					for (; j < len - 1 - i; j++) {
+						if(arr[j] > arr[j + 1]){
+							var now = arr[j + 1]; //暂存一下小的那个
+							arr[j + 1] = arr[j]; //大的放后面
+							arr[j] = now; //小得放前面
+						}
+					}
+				}
+				return arr;
+			}
+			console.log(mySort(arr));
+			
+			//数组自带sort
+			var sortArr = [1, 3, 2];
+			//console.log(sortArr.sort()) //sortArr = [1, 2, 3]
+			console.log(sortArr.sort(function(a, b){ return b - a })) //sortArr = [3, 2, 1]
+			
+			//求数组最大值
+			var arr = [6, 4, 1, 8, 2, 11, 23];
+			//apply的第二参数是数组，null(也可以是其他的undefiend之类的)借用Math.max(arg1, arg2...)方法,并且apply第二参数是数组,就把数组里的所有值都传到了Math.max里
+			console.log(Math.max.apply(undefined, arr))
+			//console.log(Math.max(...arr)) //扩展运算符
+		</script>
+	</body>
+
+</html>

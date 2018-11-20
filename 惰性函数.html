@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+
+		<script>
+			//绑定事件时
+
+			function addEvent(type, el, fn) {
+				if(window.addEventListener) {
+					el.addEventListener(type, fn, false);
+				} else if(window.attachEvent) {
+					//IE
+					el.attachEvent('on' + type, fn);
+				}
+			}
+			//调用
+			//addEvent('click', 'ID', function () {})
+
+			//优化，每一次我绑事件都要判断一次，使用一次之后，我就需要保存起来，并且我不用全局变量存起来(变量污染)
+			//闭包？
+			var closeBack = (function() {
+				var windowType;
+				return function(type, el, fn) {
+					if(window.addEventListener) {
+						windowType = function() {
+							el.addEventListener(type, fn, false);
+						}
+					} else if(window.attachEvent) {
+						windowType = function() {
+							//IE
+							el.attachEvent('on' + type, fn);
+						}
+					}
+					return windowType;
+				}
+			})();
+
+			//调用
+			closeBack.windowType
+
+			//惰性函数，第一次判断之后直接重写函数，以后就不需要再判断
+			function addEvent(type, el, fn) {
+				if(window.addEventListener) {
+					addEvent = function(type, el, fn) {
+						el.addEventListener(type, fn, false);
+					}
+				} else if(window.attachEvent) {
+					addEvent = function(type, el, fn) {
+						el.attachEvent('on' + type, fn);
+					}
+				}
+			}
+
+		</script>
+	</body>
+
+</html>

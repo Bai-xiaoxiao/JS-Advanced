@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			//什么是数组扁平化？多维数组的提取
+			//var arr = [1, [2, [3, 4]]];
+			//console.log(flatten(arr)) // [1, 2, 3, 4]
+
+			//1、递归
+			function flatten(arr) {
+				var result = [];
+				for(var i = 0, len = arr.length; i < len; i++) {
+					if(!Array.isArray(arr[i])) {
+						result.push(arr[i]);
+					} else {
+						//concat可以把参数数组传到调用的数组去
+						result = result.concat(flatten(arr[i])) //不是数组就递归方法
+					}
+				}
+				return result;
+			}
+			console.log(flatten([1, [2, [3, 5, 4]]]))
+
+			//2、如果数组的元素都是数组
+			function allNum(arr) {
+				//var result = arr.toString().split(',');
+				//用map把期内的字符串元素转成数字
+				//result.map(function(currentValue,index,nowArr){
+				//console.log(currentValue,index,arr);
+				//result[index] = parseInt(currentValue);
+				//});
+				//return result;
+
+				//别人的方法，一样的效果
+				return arr.toString().split(',').map(function(item) {
+					return +item //隐式转换,把string转成number
+				})
+			}
+			console.log(allNum( [1, [2, [3, 5, 4]]] ))
+
+			//3、扩展运算符 ...只能展开一层
+			function es6(arr) {
+				//arr.some(fun())方法用来判断数组的的元素是否满足fun规则
+				//while循环,满足数组规则就添加
+				//arr.some(item => {
+				//	console.log(item) //1 [2, Array(3)]
+				//})
+				while(arr.some(item => Array.isArray(item))) {
+					arr = [].concat(...arr); //while执行一次, ...展开一层数组
+					
+					//这里不可用arr.contact(xxxx)，因为添加之后，arr有了新元素又会添加到while便利队列，死循环
+				}
+
+				return arr;
+			}
+
+			console.log(es6( [1, [2, [3, 5, 4]]] ))
+		</script>
+	</body>
+
+</html>

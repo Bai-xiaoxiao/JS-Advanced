@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="app">
+			<p>名字{{name}}</p>
+			<p>年龄{{age}}</p>
+			<p>性别{{sex}}</p>
+		</div>
+		<script>
+			//关键东西 /\{\{(\w+)\}\}/g.exec()  不符合返回null 返回符合规则的一个数组，result[0] == {{xxx}} result[1] == xxx
+			function strTem(obj) {
+				this.el = document.querySelector(obj.el);
+				this.data = obj.data;
+				
+				var
+					temStr = this.el.innerHTML,
+					exp = /\{\{(\w+)\}\}/g;
+				
+				while((result = exp.exec(temStr)) != null) {
+					if(result[1]) {
+						temStr = temStr.replace(result[0], obj.data[result[1]]);
+					}
+				}
+				
+				this.el.innerHTML = temStr;
+			};
+			
+			var vm = new strTem({
+				el: '#app',
+				data:{
+					name: '白大哥',
+					age: '17岁',
+					sex: '保密啦'
+				}
+			});
+			
+			//如何捕捉数据变化？
+			//结合./Object.defineProperty.html的
+			function bindDefineProperty(vm.data){
+				for (var i in obj) {
+					Object.defineProperty(obj, i, {
+						get: function(){
+							
+						},
+						set: function(value){
+							//set时重新调用strTem()方法即可更新视图
+						}
+					});
+				}
+			}
+		</script>
+	</body>
+
+</html>

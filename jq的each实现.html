@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			//$.each(array || obj, function(index, val) {});
+			//jq的each可以便利对象和数组
+			function each(obj, callback){
+				var i,len;
+				//数组和对象两种情况
+				if(Array.isArray(obj)){
+					len = obj.length;
+					i = 0;
+					for (; i < len; i++) {
+						//第一版
+						//callback(i, obj[i]) 
+						//第二版，在callback中怎么跳出当前的循环呢？需要return false;
+						//if(callback(i, obj[i]) === false) break;
+						//第三版，我们希望callback里的this指向当前便利的对象,[{},{}],需求要向数组的每个对象添加一个name属性
+						//或者以下需求   $("p").each(function(){$(this).hover(function(){ ... });})
+						//使用call或者apply   console.time('for') console.timeEnd('for') 第三版修改了this指向之后，耗时增加，call会损失性能
+						if(callback.call(obj[i],i, obj[i]) === false) break;
+					}
+				}else{
+					for (let i in obj) {
+						if(callback.call(obj[i],i, obj[i]) === false) break;
+					}
+				}
+			}
+			
+			each([1,[2, 3]],function () {
+				console.log(this, Object.prototype.toString.call(this));
+				//if(Object.prototype.toString(this) === '1') return false;
+			})
+		</script>
+	</body>
+</html>

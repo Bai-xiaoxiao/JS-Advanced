@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script>
+			function object(o) {
+				function W() {}
+				W.prototype = o;
+				return new W;
+			}
+
+			function inheritPrototype(SubType, SuperType) {
+				var prototype = object(SuperType.prototype);
+				prototype.constructor = SubType;
+				SubType.prototype = prototype;
+			}
+			
+			function Pa(name = '我是弗雷'){
+				this.name = name;
+				this.say = function () {
+					console.log(this.anme);
+				}
+			}
+			Pa.prototype.run = function () {
+				console.log('我是run', this.name)
+			}
+			function Ch() {
+				Pa.call(Ch, '我是子类')
+			}
+			inheritPrototype(Ch, Pa);
+			console.log(new Ch())
+		</script>
+	</body>
+
+</html>

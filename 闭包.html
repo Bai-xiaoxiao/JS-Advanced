@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script src="jquery-2.1.0.js"></script>
+		<script>
+			for(var i = 0; i < 5; i++) {
+				(function (i) {
+					setTimeout(function() {
+						console.log(i);
+					})
+				})(i);
+			}
+		</script>
+	</body>
+
+</html>

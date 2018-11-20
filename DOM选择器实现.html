@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app"></div>
+		
+		<script type="text/javascript">
+			function getElementById(node, id) {
+				if(!node && !id) return null;
+				if(node.id === id) return node;
+				let child = node.childNodes;
+				for (var i = 0; i < child.length; i++) {
+					//这里是在递归的最外层返回的，所以能直接跳出递归
+					var found = getElementById(node.childNodes[i], id);
+        	if(found) {
+        		return found
+        	};
+
+						//递归的时候虽然返回了app，但是递归外面还有一层递归，所以返回不出来
+//					if(child[i].id === id){
+//						//return child[i];
+//						debugger
+//						break; 
+//					}else{
+//						getElementById(node.childNodes[i], id);
+//					}
+				}
+				return null;
+			}
+			var result = getElementById(document, 'app');
+			console.log(result)
+		</script>
+	</body>
+</html>
