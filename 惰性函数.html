@@ -56,6 +56,18 @@
 					}
 				}
 			}
+			
+			// 一次性函数
+			var sca = function() {
+			    console.log('msg')
+			    sca = function() {
+				console.log('foo')
+			    }
+			}
+			sca()        // msg
+			sca()        // foo
+			sca()        // foo
+
 
 		</script>
 	</body>
